@@ -31,10 +31,10 @@ const ExerciseDetail = () => {
   }, [exerciseDetail]);
 
   // Only proceed with dependent queries if exerciseDetail exists and has required fields
-  const shouldFetchDependentData = 
-    exerciseDetail && 
-    exerciseDetail.name && 
-    exerciseDetail.target && 
+  const shouldFetchDependentData =
+    exerciseDetail &&
+    exerciseDetail.name &&
+    exerciseDetail.target &&
     exerciseDetail.equipment;
 
   // Conditional checks for target and equipment data
@@ -50,7 +50,9 @@ const ExerciseDetail = () => {
     ["exerciseVideos", exerciseDetail?.name],
     {
       axiosInstance: axiosoption,
-      url: `/search?query=${encodeURIComponent(exerciseDetail?.name || '')} exercise`,
+      url: `/search?query=${encodeURIComponent(
+        exerciseDetail?.name || ""
+      )} exercise`,
     },
     {
       enabled: shouldFetchDependentData,
@@ -96,7 +98,9 @@ const ExerciseDetail = () => {
     ["equipmentExercises", equipment],
     {
       axiosInstance: axios,
-      url: equipment ? `/exercises/equipment/${encodeURIComponent(equipment)}` : "", // Skip if equipment is missing
+      url: equipment
+        ? `/exercises/equipment/${encodeURIComponent(equipment)}`
+        : "", // Skip if equipment is missing
     },
     {
       enabled: shouldFetchDependentData && equipment, // Only fetch if equipment is valid
@@ -124,7 +128,12 @@ const ExerciseDetail = () => {
         console.error(`Error fetching ${key}:`, error);
       }
     });
-  }, [exerciseDetailError, exerciseVideosError, targetMuscleError, equipmentError]);
+  }, [
+    exerciseDetailError,
+    exerciseVideosError,
+    targetMuscleError,
+    equipmentError,
+  ]);
 
   // Scroll to top on mount
   useEffect(() => {
@@ -141,7 +150,7 @@ const ExerciseDetail = () => {
   if (exerciseDetailError) {
     console.error("Error loading exercise details:", exerciseDetailError);
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
         Error loading exercise details. Please try again later.
       </Box>
     );
@@ -151,7 +160,7 @@ const ExerciseDetail = () => {
   if (!exerciseDetail) {
     console.warn("No exercise data found.");
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
         No exercise data found.
       </Box>
     );
@@ -160,17 +169,17 @@ const ExerciseDetail = () => {
   return (
     <Box>
       <Detail exerciseDetail={exerciseDetail} />
-      
+
       {isLoadingExerciseVideos ? (
         <Loader />
       ) : exerciseVideos && exerciseVideos.contents ? (
-        <ExerciseVideos 
-          exerciseVideos={exerciseVideos.contents} 
-          name={exerciseDetail.name} 
+        <ExerciseVideos
+          exerciseVideos={exerciseVideos.contents}
+          name={exerciseDetail.name}
         />
       ) : null}
-      
-      {(isLoadingTargetMuscle || isLoadingEquipmentExercises) ? (
+
+      {isLoadingTargetMuscle || isLoadingEquipmentExercises ? (
         <Loader />
       ) : (
         <SimilarExercises
