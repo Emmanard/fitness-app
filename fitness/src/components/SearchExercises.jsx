@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import axios from "../api/api";
 import useAxiosFunction from "../hooks/useAxiosQueryFn";
-import HorizontalScrollbar from "./HorizontalScrollbar";
+import HorizontalScrollbar from "./HorizontalScrollBar";
 import Loader from "./Loader";  // Assuming you have a loader component
 
 const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
